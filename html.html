@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="tt">
+    <p></p>
+    <button id="search">search</button>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+<script>
+    $(function() {
+      // ［検索］ボタンクリックで検索開始
+      $('#search').click(function() {
+        // .phpファイルへのアクセス
+        $.ajax('http://localhost:8080/info/user')
+        // 検索成功時にはページに結果を反映
+        .done(function(data) {
+            $("p").append(data)
+        })
+        // 検索失敗時には、その旨をダイアログ表示
+        .fail(function() {
+          window.alert('正しい結果を得られませんでした。');
+        });
+      });
+    });
+    </script>
+</html>
