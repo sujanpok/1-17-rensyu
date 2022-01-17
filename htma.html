@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    番号：<input type="text" id="bango" name="bango" value="">
+    ユーザー名：<input type="text" id="username"name="username">
+    電話：<input type="text" id="telno"name="telno">
+
+    <p></p>
+    <button id="search">支払い</button>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+<script>
+    $(function() {
+      // ［検索］ボタンクリックで検索開始
+      $('#search').click(function() {
+        var inputbango = $('#bango').val();
+        var inputusername = $('#username').val();
+        var inputtelno = $('#telno').val();
+
+        $.ajax({
+  type: "POST",   //HTTPメソッド
+  url: "http://localhost:8080/userinfo/sousin/",   //データの送信先
+  data: JSON.stringify({
+            bango:inputbango,
+            username:inputusername,
+            telno:inputtelno
+        }),
+        dataType: "json",      
+  contentType:"application/json; charset=UTF-8",
+})
+// Ajaxリクエストが成功（ステータスコード200）した場合の処理
+  .done(function(data) {
+    $("p").append(data.bango)
+    console.log(data);
+  })
+// Ajaxリクエストが失敗した場合の処理
+  .fail(function() {
+    console.log('失敗');
+  });
+        // // .phpファイルへのアクセス
+        // $.ajax('http://localhost:8080/info/user')
+        // // 検索成功時にはページに結果を反映
+        // .done(function(data) {
+        //     $("p").append(data)
+        // })
+        // // 検索失敗時には、その旨をダイアログ表示
+        // .fail(function() {
+        //   window.alert('正しい結果を得られませんでした。');
+        // });
+      });
+    });
+    </script>
+</html>
